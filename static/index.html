@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rangrag Archviz Studio — Outreach CRM & Dispatcher</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand-header">
+        <div class="brand-icon">R</div>
+        <div>
+          <div class="brand-title">RANGRAG STUDIO</div>
+          <div class="brand-sub">Architectural CGI CRM</div>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <a class="nav-item active" data-view="dashboard">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Dashboard</span>
+        </a>
+        <a class="nav-item" data-view="kanban">
+          <i data-lucide="columns-3"></i>
+          <span>Review Kanban</span>
+          <span class="nav-badge gold" id="badge-ready">0</span>
+        </a>
+        <a class="nav-item" data-view="hotleads">
+          <i data-lucide="flame"></i>
+          <span>Hot WhatsApp</span>
+          <span class="nav-badge hot" id="badge-hot">0</span>
+        </a>
+        <a class="nav-item" data-view="upload">
+          <i data-lucide="file-up"></i>
+          <span>Data Cleaning</span>
+        </a>
+        <a class="nav-item" data-view="leads">
+          <i data-lucide="users"></i>
+          <span>All Leads</span>
+          <span class="nav-badge" id="badge-leads">0</span>
+        </a>
+        <a class="nav-item" data-view="settings">
+          <i data-lucide="settings"></i>
+          <span>Domain & Handshake</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="studio-pill">
+          <div class="studio-avatar">RS</div>
+          <div style="flex:1; overflow:hidden;">
+            <div style="font-size:12px; font-weight:700; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Raj Shekhada</div>
+            <div style="font-size:10px; color:var(--text-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Lead 3D Visualizer</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="main-content">
+      
+      <!-- Top Bar -->
+      <header class="topbar">
+        <div class="page-title-box">
+          <h1 id="page-title">Analytics & Dashboard</h1>
+          <p id="page-desc">Real-time outreach performance, domain health, and conversion metrics</p>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="btn btn-secondary btn-sm" id="btn-scan-imap" title="Scan connected IMAP inbox for replies">
+            <i data-lucide="inbox"></i>
+            <span>Scan Inbox</span>
+          </button>
+          <button class="btn btn-secondary btn-sm" id="btn-trigger-followup" title="Check leads waiting >3 days without response">
+            <i data-lucide="repeat"></i>
+            <span>Auto Follow-ups</span>
+          </button>
+          <button class="btn btn-primary btn-sm" id="btn-generate-ai-batch">
+            <i data-lucide="sparkles"></i>
+            <span>Batch AI Drafts</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Live Dispatcher Banner -->
+      <section class="dispatch-banner" id="dispatch-banner">
+        <div class="dispatch-info">
+          <div class="pulse-dot" id="sender-pulse-dot"></div>
+          <div class="dispatch-text">
+            <div class="title" id="sender-status-title">Dispatcher Engine: Standby</div>
+            <div class="desc" id="sender-status-desc">Daily Quota: 0/40 | Zero-Risk Simulation Mode Active</div>
+          </div>
+        </div>
+
+        <div class="dispatch-controls">
+          <button class="btn btn-emerald btn-sm" id="btn-sender-start">
+            <i data-lucide="play"></i>
+            <span>Start Dispatcher</span>
+          </button>
+          <button class="btn btn-secondary btn-sm" id="btn-sender-pause" style="display:none;">
+            <i data-lucide="pause"></i>
+            <span>Pause</span>
+          </button>
+          <button class="btn btn-danger btn-sm" id="btn-sender-stop" style="display:none;">
+            <i data-lucide="square"></i>
+            <span>Stop</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- VIEW 1: DASHBOARD -->
+      <div class="view-container" id="view-dashboard">
+        <!-- Metric Cards -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-header">
+              <span>Clean Leads</span>
+              <i data-lucide="database"></i>
+            </div>
+            <div class="metric-value" id="metric-total-leads">0</div>
+            <div class="metric-sub">Verified & syntax-checked</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span>Daily Quota</span>
+              <i data-lucide="gauge"></i>
+            </div>
+            <div class="metric-value" id="metric-quota">0 / 40</div>
+            <div class="metric-sub" id="metric-quota-sub">40 remaining today</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span>Ready To Send</span>
+              <i data-lucide="check-circle-2"></i>
+            </div>
+            <div class="metric-value" id="metric-ready-to-send" style="color:var(--accent);">0</div>
+            <div class="metric-sub">Approved drafts in queue</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span>Sent Lifetime</span>
+              <i data-lucide="send"></i>
+            </div>
+            <div class="metric-value" id="metric-total-sent">0</div>
+            <div class="metric-sub" id="metric-sent-today">0 sent today</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span>Reply Rate</span>
+              <i data-lucide="message-square"></i>
+            </div>
+            <div class="metric-value" id="metric-reply-rate" style="color:var(--emerald);">0%</div>
+            <div class="metric-sub" id="metric-replies-count">0 replies received</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-header">
+              <span>Deliverability</span>
+              <i data-lucide="shield-check"></i>
+            </div>
+            <div class="metric-value" id="metric-deliverability">100%</div>
+            <div class="metric-sub" id="metric-bounces">0 bounces detected</div>
+          </div>
+
+          <div class="metric-card" style="border-color: rgba(16, 185, 129, 0.3); background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), var(--bg-card));">
+            <div class="metric-header" style="color:var(--emerald);">
+              <span>Hot WhatsApp Leads</span>
+              <i data-lucide="flame"></i>
+            </div>
+            <div class="metric-value" id="metric-hot-leads" style="color:var(--emerald);">0</div>
+            <div class="metric-sub positive" id="metric-whatsapp-converted">0 chats initiated</div>
+          </div>
+        </div>
+
+        <!-- Funnel and Activity Grid -->
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+          <!-- Conversion Funnel Card -->
+          <div class="metric-card">
+            <div class="metric-header" style="margin-bottom:12px;">
+              <span>Outreach Pipeline Funnel</span>
+              <i data-lucide="git-merge"></i>
+            </div>
+            <div id="funnel-container" style="display:flex; flex-direction:column; gap:10px;">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Live Activity Log -->
+          <div class="metric-card">
+            <div class="metric-header" style="margin-bottom:12px;">
+              <span>Live Campaign Audit Log</span>
+              <i data-lucide="activity"></i>
+            </div>
+            <div id="activity-log-container" style="max-height: 280px; overflow-y:auto; display:flex; flex-direction:column; gap:8px;">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 2: KANBAN REVIEW QUEUE -->
+      <div class="view-container" id="view-kanban" style="display:none;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+          <div>
+            <h2 style="font-size:15px; font-weight:700;">Human-in-the-Loop Review Pipeline</h2>
+            <p style="font-size:12px; color:var(--text-dim);">Inspect, edit bespoke email copy inline, and approve drafts before automated randomized dispatch</p>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-secondary btn-sm" id="btn-refresh-kanban">
+              <i data-lucide="refresh-cw"></i>
+              <span>Refresh Board</span>
+            </button>
+            <button class="btn btn-primary btn-sm" id="btn-batch-approve-all">
+              <i data-lucide="check-check"></i>
+              <span>Approve All Drafts</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="kanban-board">
+          <!-- Col 1: Pending AI -->
+          <div class="kanban-column">
+            <div class="kanban-col-header">
+              <div class="kanban-col-title">
+                <i data-lucide="sparkles" style="color:#94a3b8; width:16px;"></i>
+                <span>Pending AI</span>
+              </div>
+              <span class="col-badge" id="kanban-count-pending">0</span>
+            </div>
+            <div class="kanban-cards-wrapper" id="col-pending-ai">
+              <!-- Cards -->
+            </div>
+          </div>
+
+          <!-- Col 2: Ready to Review -->
+          <div class="kanban-column">
+            <div class="kanban-col-header">
+              <div class="kanban-col-title">
+                <i data-lucide="file-edit" style="color:var(--accent); width:16px;"></i>
+                <span>Ready to Review</span>
+              </div>
+              <span class="col-badge" id="kanban-count-ready">0</span>
+            </div>
+            <div class="kanban-cards-wrapper" id="col-ready-review">
+              <!-- Cards -->
+            </div>
+          </div>
+
+          <!-- Col 3: Dispatched -->
+          <div class="kanban-column">
+            <div class="kanban-col-header">
+              <div class="kanban-col-title">
+                <i data-lucide="send" style="color:var(--indigo); width:16px;"></i>
+                <span>Dispatched</span>
+              </div>
+              <span class="col-badge" id="kanban-count-dispatched">0</span>
+            </div>
+            <div class="kanban-cards-wrapper" id="col-dispatched">
+              <!-- Cards -->
+            </div>
+          </div>
+
+          <!-- Col 4: Hot Leads / WhatsApp -->
+          <div class="kanban-column" style="border-color: rgba(16, 185, 129, 0.3);">
+            <div class="kanban-col-header" style="background: rgba(16, 185, 129, 0.05);">
+              <div class="kanban-col-title" style="color:var(--emerald);">
+                <i data-lucide="flame" style="width:16px;"></i>
+                <span>Hot Leads (WhatsApp)</span>
+              </div>
+              <span class="col-badge" style="background: rgba(16, 185, 129, 0.2); color:var(--emerald);" id="kanban-count-hot">0</span>
+            </div>
+            <div class="kanban-cards-wrapper" id="col-hot-leads">
+              <!-- Cards -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 3: HOT WHATSAPP LEADS -->
+      <div class="view-container" id="view-hotleads" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <h2 style="font-size:16px; font-weight:700; color:var(--emerald); display:flex; align-items:center; gap:8px;">
+              <i data-lucide="flame"></i>
+              <span>High-Intent Architect Inquiries & Instant WhatsApp Handoff</span>
+            </h2>
+            <p style="font-size:12px; color:var(--text-dim);">When leads respond with interest, launch instant 1-click WhatsApp closing chats with personalized lookbook links</p>
+          </div>
+
+          <button class="btn btn-secondary btn-sm" id="btn-open-simulate-modal">
+            <i data-lucide="test-tube"></i>
+            <span>Simulate Lead Reply</span>
+          </button>
+        </div>
+
+        <div id="hot-leads-container" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap:16px;">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- VIEW 4: CSV UPLOAD & CLEANING -->
+      <div class="view-container" id="view-upload" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <h2 style="font-size:16px; font-weight:700;">Data Cleaning & Fresh CSV Generation</h2>
+            <p style="font-size:12px; color:var(--text-dim);">Upload raw architect datasets. Automatically clean multi-emails, validate syntax, drop bad rows, and export clean CSV.</p>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <a href="/api/download/sample-csv" class="btn btn-secondary btn-sm" download>
+              <i data-lucide="file-down"></i>
+              <span>Download Sample Raw CSV</span>
+            </a>
+            <a href="/api/download/fresh-csv" class="btn btn-primary btn-sm" id="btn-download-fresh" download>
+              <i data-lucide="download"></i>
+              <span>Download fresh_architects_outreach_data.csv</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Dropzone -->
+        <div class="dropzone" id="csv-dropzone">
+          <input type="file" id="csv-file-input" accept=".csv, .xlsx, .xls" style="display:none;">
+          <div class="dropzone-icon">
+            <i data-lucide="upload-cloud" style="width:28px; height:28px;"></i>
+          </div>
+          <div>
+            <div style="font-weight:700; font-size:14px; color:#fff;">Click or drag raw architect CSV here</div>
+            <div style="font-size:12px; color:var(--text-dim); margin-top:4px;">Supports .csv, .xlsx with columns: Firm Name, Email, Contact Person, Mobile, City</div>
+          </div>
+        </div>
+
+        <!-- Cleaning Summary Card -->
+        <div class="metric-card" id="clean-summary-card" style="display:none;">
+          <div class="metric-header">
+            <span>Validation & Cleaning Pipeline Summary</span>
+            <i data-lucide="check-circle-2" style="color:var(--emerald);"></i>
+          </div>
+          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; margin-top:8px;">
+            <div style="background:#181d2a; padding:12px; border-radius:8px;">
+              <div style="font-size:11px; color:var(--text-dim);">Total Raw Rows</div>
+              <div style="font-size:20px; font-weight:800; color:#fff;" id="sum-total-rows">0</div>
+            </div>
+            <div style="background:#181d2a; padding:12px; border-radius:8px; border-left:3px solid var(--emerald);">
+              <div style="font-size:11px; color:var(--emerald);">Valid Leads Cleaned</div>
+              <div style="font-size:20px; font-weight:800; color:var(--emerald);" id="sum-valid-rows">0</div>
+            </div>
+            <div style="background:#181d2a; padding:12px; border-radius:8px;">
+              <div style="font-size:11px; color:var(--rose);">Bad Emails Filtered</div>
+              <div style="font-size:20px; font-weight:800; color:var(--rose);" id="sum-bad-emails">0</div>
+            </div>
+            <div style="background:#181d2a; padding:12px; border-radius:8px;">
+              <div style="font-size:11px; color:var(--accent);">Duplicates Dropped</div>
+              <div style="font-size:20px; font-weight:800; color:var(--accent);" id="sum-duplicates">0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 5: ALL LEADS TABLE -->
+      <div class="view-container" id="view-leads" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <h2 style="font-size:16px; font-weight:700;">Leads Database</h2>
+            <p style="font-size:12px; color:var(--text-dim);">All verified architecture and design practices in local database</p>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <input type="text" id="lead-search-input" class="form-input" placeholder="Search by firm, city, contact..." style="width:260px; padding:6px 12px; font-size:12px;">
+          </div>
+        </div>
+
+        <div class="data-table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Firm Name</th>
+                <th>Contact Person</th>
+                <th>Primary Clean Email</th>
+                <th>City</th>
+                <th>Mobile / WhatsApp</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="leads-table-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- VIEW 6: DOMAIN & HANDSHAKE SETTINGS -->
+      <div class="view-container" id="view-settings" style="display:none;">
+        <div>
+          <h2 style="font-size:16px; font-weight:700;">Domain Mail Configuration & Handshake Testing</h2>
+          <p style="font-size:12px; color:var(--text-dim);">Configure outbound SMTP and inbound IMAP settings. Includes live handshake testing and safety simulation controls.</p>
+        </div>
+
+        <form id="settings-form" style="display:flex; flex-direction:column; gap:24px;">
+          
+          <!-- Safeguard Simulation Mode Card -->
+          <div class="metric-card" style="border-color: rgba(245, 158, 11, 0.4); background: linear-gradient(135deg, rgba(245, 158, 11, 0.05), var(--bg-card));">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <div style="font-size:14px; font-weight:700; color:var(--accent); display:flex; align-items:center; gap:8px;">
+                  <i data-lucide="shield-alert"></i>
+                  <span>Zero-Risk Simulation Mode</span>
+                </div>
+                <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">
+                  When enabled, the dispatcher runs full campaigns, randomized delays, and logging with zero risk of burning external email reputation.
+                </div>
+              </div>
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                <input type="checkbox" id="setting-simulation-mode" checked style="width:18px; height:18px; accent-color:var(--accent);">
+                <span style="font-size:13px; font-weight:700;">Simulation Active</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Gemini AI Config -->
+          <div class="metric-card">
+            <div class="metric-header" style="margin-bottom:12px;">
+              <span>Google Gemini AI Integration</span>
+              <i data-lucide="sparkles"></i>
+            </div>
+            <div class="form-row">
+              <div class="form-group" style="flex:2;">
+                <label class="form-label">Gemini API Key</label>
+                <input type="password" id="setting-gemini-key" class="form-input" placeholder="AIzaSy...">
+              </div>
+              <div class="form-group" style="flex:1;">
+                <label class="form-label">Gemini Model</label>
+                <select id="setting-gemini-model" class="form-select">
+                  <option value="gemini-2.5-flash">gemini-2.5-flash (Recommended)</option>
+                  <option value="gemini-1.5-flash">gemini-1.5-flash</option>
+                  <option value="gemini-1.5-pro">gemini-1.5-pro</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- SMTP Outbound Config -->
+          <div class="metric-card">
+            <div class="metric-header" style="margin-bottom:12px;">
+              <span>Outbound SMTP Server (Domain Dispatch)</span>
+              <i data-lucide="mail"></i>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">SMTP Host</label>
+                <input type="text" id="setting-smtp-server" class="form-input" value="smtp.gmail.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label">SMTP Port</label>
+                <input type="number" id="setting-smtp-port" class="form-input" value="587">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Sender Email / Username</label>
+                <input type="email" id="setting-smtp-email" class="form-input" placeholder="rangragstudio@gmail.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label">SMTP Password / App Password</label>
+                <input type="password" id="setting-smtp-password" class="form-input" placeholder="••••••••••••••••">
+              </div>
+            </div>
+            <div class="form-row" style="margin-top:12px;">
+              <div class="form-group">
+                <label class="form-label">Sender Display Name</label>
+                <input type="text" id="setting-sender-name" class="form-input" value="Raj Shekhada | Rangrag Archviz Studio">
+              </div>
+              <div class="form-group" style="display:flex; justify-content:center;">
+                <label class="form-label" style="margin-bottom:8px;">Security</label>
+                <label style="display:flex; align-items:center; gap:8px; font-size:13px;">
+                  <input type="checkbox" id="setting-smtp-tls" checked style="accent-color:var(--accent);">
+                  <span>Use STARTTLS</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- IMAP Inbound Config -->
+          <div class="metric-card">
+            <div class="metric-header" style="margin-bottom:12px;">
+              <span>Inbound IMAP Server (Reply Tracking & Bounce Detection)</span>
+              <i data-lucide="inbox"></i>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">IMAP Host</label>
+                <input type="text" id="setting-imap-server" class="form-input" value="imap.gmail.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label">IMAP Port</label>
+                <input type="number" id="setting-imap-port" class="form-input" value="993">
+              </div>
+              <div class="form-group">
+                <label class="form-label">IMAP Email</label>
+                <input type="email" id="setting-imap-email" class="form-input" placeholder="rangragstudio@gmail.com">
+              </div>
+              <div class="form-group">
+                <label class="form-label">IMAP Password</label>
+                <input type="password" id="setting-imap-password" class="form-input" placeholder="••••••••••••••••">
+              </div>
+            </div>
+          </div>
+
+          <!-- Sending Limits & Randomized Delays -->
+          <div class="metric-card">
+            <div class="metric-header" style="margin-bottom:12px;">
+              <span>Human-like Sending & Rate Limits</span>
+              <i data-lucide="timer"></i>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Daily Send Limit (Domain Health Protection): <strong id="val-daily-limit">40</strong> emails/day</label>
+                <input type="range" id="setting-daily-limit" min="10" max="100" value="40" style="accent-color:var(--accent);">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Random Delay Jitter: <strong id="val-delays">30s – 60s</strong></label>
+                <div style="display:flex; gap:10px; align-items:center;">
+                  <input type="number" id="setting-min-delay" class="form-input" value="30" min="5" max="300" style="width:80px;">
+                  <span style="color:var(--text-dim);">to</span>
+                  <input type="number" id="setting-max-delay" class="form-input" value="60" min="10" max="600" style="width:80px;">
+                  <span style="font-size:12px; color:var(--text-dim);">seconds randomized sleep</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Automated Follow-up Trigger</label>
+                <div style="display:flex; gap:10px; align-items:center;">
+                  <input type="number" id="setting-followup-days" class="form-input" value="3" min="1" max="14" style="width:80px;">
+                  <span style="font-size:12px; color:var(--text-dim);">days after dispatch without reply</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Handshake Results Card -->
+          <div class="metric-card" id="handshake-result-card" style="display:none;">
+            <div class="metric-header">
+              <span>Live Handshake Diagnostics</span>
+              <i data-lucide="activity"></i>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:8px; margin-top:8px;" id="handshake-details">
+              <!-- Result pills -->
+            </div>
+          </div>
+
+          <!-- Save Button -->
+          <div style="display:flex; justify-content:flex-end;">
+            <button type="submit" class="btn btn-primary" id="btn-save-settings">
+              <i data-lucide="zap"></i>
+              <span>Save & Test Domain Handshake</span>
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- DRAFT EDIT & PREVIEW MODAL -->
+  <div class="modal-overlay" id="modal-edit-draft">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <div style="font-size:15px; font-weight:700; color:#fff;" id="modal-lead-firm">Firm Name</div>
+          <div style="font-size:12px; color:var(--text-dim);" id="modal-lead-meta">contact@firm.com • City</div>
+        </div>
+        <button class="btn btn-secondary btn-sm" id="btn-close-edit-modal">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Subject Line</label>
+          <input type="text" id="modal-subject-input" class="form-input">
+        </div>
+
+        <div style="display:flex; gap:10px; border-bottom:1px solid var(--border-subtle); padding-bottom:8px;">
+          <button class="btn btn-secondary btn-sm active" id="tab-btn-text">Edit Copy</button>
+          <button class="btn btn-secondary btn-sm" id="tab-btn-html">Rendered HTML Card</button>
+        </div>
+
+        <div id="tab-content-text" class="form-group">
+          <label class="form-label">Personalized Outreach Body</label>
+          <textarea id="modal-body-input" class="form-textarea" style="min-height:220px;"></textarea>
+        </div>
+
+        <div id="tab-content-html" style="display:none; max-height:360px; overflow-y:auto; border:1px solid var(--border-subtle); border-radius:8px;">
+          <iframe id="modal-html-iframe" style="width:100%; height:340px; border:none; background:#fff; border-radius:6px;"></iframe>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-cancel-draft">Cancel</button>
+        <button class="btn btn-secondary" id="btn-save-draft">Save Changes</button>
+        <button class="btn btn-emerald" id="btn-approve-draft">
+          <i data-lucide="check"></i>
+          <span>Approve for Dispatch</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIMULATE REPLY TEST MODAL -->
+  <div class="modal-overlay" id="modal-simulate-reply">
+    <div class="modal-dialog" style="max-width:540px;">
+      <div class="modal-header">
+        <div style="font-size:15px; font-weight:700; color:#fff;">Simulate Inbound Lead Response</div>
+        <button class="btn btn-secondary btn-sm" id="btn-close-sim-modal">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Select Dispatched Lead</label>
+          <select id="sim-lead-select" class="form-select"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Response Sentiment</label>
+          <select id="sim-sentiment-select" class="form-select">
+            <option value="Interested">🔥 Interested (Triggers Hot Lead + WhatsApp Handoff)</option>
+            <option value="Not Interested">🚫 Not Interested (Unsubscribe / Archive)</option>
+            <option value="Bounce">⚠️ Bounce (Delivery Failure)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Custom Reply Message (Optional)</label>
+          <textarea id="sim-message-input" class="form-textarea" placeholder="Leave blank to use realistic architectural sample inquiry..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="btn-cancel-sim">Cancel</button>
+        <button class="btn btn-emerald" id="btn-execute-sim">
+          <i data-lucide="sparkles"></i>
+          <span>Inject Simulated Reply</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Main JavaScript Controller -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

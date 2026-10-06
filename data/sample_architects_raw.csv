@@ -1,0 +1,14 @@
+Firm Name,Contact Person,Email Address,Phone Number,City,State,Category,Website
+Studio Morphogenesis,Rahul Sharma,rahul@studiomorph.com; contact@studiomorph.com,+91 98251 12345,Mumbai,Maharashtra,Architecture & Urban Design,https://studiomorph.example
+Aakar Design Studio,Priya Mehta,priya.mehta@aakardesign.in,9876543210,Ahmedabad,Gujarat,Luxury Residential & Commercial,https://aakardesign.example
+Vistara Architects,Amit Verma,info@vistara-arch.org,,Bengaluru,Karnataka,High-Rise & Commercial,https://vistara-arch.example
+Zenith Interiors,Neha Patel,neha@zenithinteriors.com,9898012345,Surat,Gujarat,Luxury Interior Architecture,https://zenithinteriors.example
+,,missing_firm@firm.com,9876500000,Pune,Maharashtra,Architecture,
+Apex Urban Planners,Vikram Joshi,invalid-email-address,9824011111,Delhi,NCR,Urban Planning,https://apexurban.example
+Kala Kendra Architects,Ananya Iyer,ananya@kalakendra.in,9812345678,Chennai,Tamil Nadu,Heritage & Contemporary Architecture,https://kalakendra.example
+Studio Morphogenesis,Rahul Sharma,rahul@studiomorph.com,+91 98251 12345,Mumbai,Maharashtra,Architecture,https://studiomorph.example
+Opus Architecture,Siddharth Roy,siddharth@opusarch.com,9830012345,Kolkata,West Bengal,Hospitality & Retail Architecture,https://opusarch.example
+Space Matrix Design,Tanvi Desai,tanvi@spacematrix.co; info@spacematrix.co,9898989898,Vadodara,Gujarat,Architecture & Interior,https://spacematrix.example
+Dwell Architects,Karan Kapoor,karan@dwellarchitects.com,9845012345,Hyderabad,Telangana,Bespoke Villa Architecture,https://dwellarchitects.example
+Dummy Firm Without Mail,Nobody,,9999999999,Jaipur,Rajasthan,Interior,
+Linear Studio,Meera Joshi,meera@linearstudio.in,9723456789,Pune,Maharashtra,Modern Architecture & Facades,https://linearstudio.example
